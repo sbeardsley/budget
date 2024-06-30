@@ -1,0 +1,32 @@
+{
+    "version": "2.0.0",
+
+    "tasks": [
+      {
+        "label": "rust crud usecase module",
+
+        "command": "touch create_${input:entity_name}_use_case.rs' 'update_${input:entity_name}_use_case.rs' 'get_one_${input:entity_name}_use_case.rs' 'get_all_${input:entity_name}_use_case.rs'",
+
+        "type": "shell",
+        "problemMatcher": [],
+        "presentation": {
+          "echo": false,
+          "reveal": "silent",
+          "focus": false,
+          "panel": "shared",
+          "showReuseMessage": false,
+          "clear": true
+        },
+     }
+  ],
+
+  "inputs": [
+
+    {
+      "type": "promptString",
+      "id": "entity_name",
+      "description": "crud use_case entity_name",
+      "default": "my_entity"
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "db_name": "SQLite",
+  "query": "\n            INSERT INTO budgets (id, name, description, total, currency, user_id, created_at, updated_at)\n            VALUES ($1, $2, $3, $4, $5, $6, $7, $8)\n            RETURNING id, name, description, total, currency, user_id, created_at, updated_at;\n            ",
+  "describe": {
+    "columns": [
+      {
+        "name": "id",
+        "ordinal": 0,
+        "type_info": "Text"
+      },
+      {
+        "name": "name",
+        "ordinal": 1,
+        "type_info": "Text"
+      },
+      {
+        "name": "description",
+        "ordinal": 2,
+        "type_info": "Text"
+      },
+      {
+        "name": "total",
+        "ordinal": 3,
+        "type_info": "Float"
+      },
+      {
+        "name": "currency",
+        "ordinal": 4,
+        "type_info": "Text"
+      },
+      {
+        "name": "user_id",
+        "ordinal": 5,
+        "type_info": "Text"
+      },
+      {
+        "name": "created_at",
+        "ordinal": 6,
+        "type_info": "Datetime"
+      },
+      {
+        "name": "updated_at",
+        "ordinal": 7,
+        "type_info": "Datetime"
+      }
+    ],
+    "parameters": {
+      "Right": 8
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ]
+  },
+  "hash": "9a3e7e50b1d9b3b3593ce06dffec1438cc4ca93b9291ba826e8b3c3768bc26a9"
+}
