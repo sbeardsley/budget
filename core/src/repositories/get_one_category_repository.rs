@@ -2,7 +2,7 @@ use uuid::Uuid;
 
 use crate::domain::{errors::GetOneCategoryError, models::NewCategory};
 
-pub trait GetOneCategoryRepositoryContract {
+pub trait GetOneCategoryRepositoryContract: Clone + Send + Sync + 'static {
     fn get_one_category(
         &self,
         category_id: Uuid,

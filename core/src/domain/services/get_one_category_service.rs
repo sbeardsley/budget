@@ -1,10 +1,24 @@
+use crate::{
+    domain::{errors::GetOneCategoryError, models::NewCategory, usecases::GetOneCategoryUseCase},
+    repositories::GetOneCategoryRepositoryContract,
+};
 use uuid::Uuid;
 
-use crate::domain::{errors::GetOneCategoryError, models::NewCategory};
+pub struct GetOneCategoryService<R: GetOneCategoryRepositoryContract> {
+    repository: R,
+}
 
-pub trait GetOneCategoryRepositoryContract {
-    fn get_one_category(
+impl<R: GetOneCategoryRepositoryContract> GetOneCategoryService<R> {
+    pub fn new(repository: R) -> Self {
+        Self { repository }
+    }
+}
+
+impl<R: GetOneCategoryRepositoryContract> GetOneCategoryUseCase for GetOneCategoryService<R> {
+    async fn get_one_category(
         &self,
         category_id: Uuid,
-    ) -> impl std::future::Future<Output = Result<NewCategory, GetOneCategoryError>> + Send;
+    ) -> Result<Option<NewCategory>, GetOneCategoryError> {
+        self.repository.get_one_category(category_id).await
+    }
 }

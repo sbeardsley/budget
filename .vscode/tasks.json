@@ -35,6 +35,22 @@
         },
      },
      {
+        "label": "rust crud service handler contracts",
+
+        "command": "touch '${relativeFileDirname}/create_${input:entity_name}_command_handler.rs' '${relativeFileDirname}/update_${input:entity_name}_command_handler.rs' '${relativeFileDirname}/get_one_${input:entity_name}_command_handler.rs' '${relativeFileDirname}/get_all_${input:entity_name}_command_handler.rs' && echo 'mod create_${input:entity_name}_command_handler;\nmod update_${input:entity_name}_command_handler;\nmod get_one_${input:entity_name}_command_handler;\nmod get_all_${input:entity_name}_command_handler;\n' >> ${relativeFile} && echo 'pub use create_${input:entity_name}_command_handler::*;\npub use update_${input:entity_name}_command_handler::*;\npub use get_one_${input:entity_name}_command_handler::*;\npub use get_all_${input:entity_name}_command_handler::*;\n' >> ${relativeFile}",
+
+        "type": "shell",
+        "problemMatcher": [],
+        "presentation": {
+          "echo": false,
+          "reveal": "silent",
+          "focus": false,
+          "panel": "shared",
+          "showReuseMessage": false,
+          "clear": true
+        },
+     },
+     {
         "label": "rust crud repo_contract module",
 
         "command": "touch '${relativeFileDirname}/create_${input:entity_name}_repository.rs' '${relativeFileDirname}/update_${input:entity_name}_repository.rs' '${relativeFileDirname}/get_one_${input:entity_name}_repository.rs' '${relativeFileDirname}/get_all_${input:entity_name}_repository.rs' && echo 'mod create_${input:entity_name}_repository;\nmod update_${input:entity_name}_repository;\nmod get_one_${input:entity_name}_repository;\nmod get_all_${input:entity_name}_repository;\n' >> ${relativeFile} && echo 'pub use create_${input:entity_name}_repository::*;\npub use update_${input:entity_name}_repository::*;\npub use get_one_${input:entity_name}_repository::*;\npub use get_all_${input:entity_name}_repository::*;\n' >> ${relativeFile}",
@@ -49,7 +65,7 @@
           "showReuseMessage": false,
           "clear": true
         },
-     }
+     },
   ],
 
   "inputs": [

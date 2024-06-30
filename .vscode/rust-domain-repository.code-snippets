@@ -59,7 +59,7 @@
             "",
             "use crate::domain::{errors::GetOne${1/(.*)/${1:/pascalcase}/}Error, models::New${1/(.*)/${1:/pascalcase}/}};",
             "",
-            "pub trait GetOne${1/(.*)/${1:/pascalcase}/}RepositoryContract {",
+            "pub trait GetOne${1/(.*)/${1:/pascalcase}/}RepositoryContract: Clone + Send + Sync + 'static  {",
             "    fn get_one_${1/(.*)/${1:/downcase}/}(",
             "        &self,",
             "        ${1/(.*)/${1:/downcase}/}_id: Uuid,",
