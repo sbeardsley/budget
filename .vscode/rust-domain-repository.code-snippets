@@ -63,7 +63,7 @@
             "    fn get_one_${1/(.*)/${1:/downcase}/}(",
             "        &self,",
             "        ${1/(.*)/${1:/downcase}/}_id: Uuid,",
-            "    ) -> impl std::future::Future<Output = Result<New${1/(.*)/${1:/pascalcase}/}, GetOne${1/(.*)/${1:/pascalcase}/}Error>> + Send;",
+            "    ) -> impl std::future::Future<Output = Result<Option<New${1/(.*)/${1:/pascalcase}/}>, GetOne${1/(.*)/${1:/pascalcase}/}Error>> + Send;",
             "}"
         ]
     },

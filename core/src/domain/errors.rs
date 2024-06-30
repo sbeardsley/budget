@@ -1,6 +1,12 @@
 use thiserror::Error;
 
 #[derive(Error, Debug)]
+pub enum BudgetParseError {
+    #[error("BudgetId parse error")]
+    BudgetIdParseError,
+}
+
+#[derive(Error, Debug)]
 pub enum CreateBudgetError {
     #[error("Budget already exists")]
     BudgetAlreadyExists,
@@ -36,4 +42,32 @@ pub enum ConnectionError {
     TransactionFailed,
     #[error("Migration failed")]
     MigrationFailed,
+}
+
+#[derive(Error, Debug)]
+pub enum CreateCategoryError {
+    #[error("Category already exists")]
+    CategoryAlreadyExists,
+    #[error("Unknown error")]
+    Unknown,
+}
+
+#[derive(Error, Debug)]
+pub enum UpdateCategoryError {
+    #[error("Category not found")]
+    CategoryNotFound,
+    #[error("Unknown error")]
+    Unknown,
+}
+
+#[derive(Error, Debug)]
+pub enum GetOneCategoryError {
+    #[error("Unknown error")]
+    Unknown,
+}
+
+#[derive(Error, Debug)]
+pub enum GetAllCategoriesError {
+    #[error("Unknown error")]
+    Unknown,
 }

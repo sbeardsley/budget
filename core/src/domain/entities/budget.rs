@@ -3,6 +3,8 @@ use chrono::{DateTime, Utc};
 use rust_decimal::{prelude::FromPrimitive, Decimal};
 use uuid::Uuid;
 
+use crate::domain::errors::BudgetParseError;
+
 #[derive(Debug, Clone)]
 pub struct BudgetId(Uuid);
 
@@ -16,6 +18,17 @@ impl From<BudgetId> for Uuid {
     fn from(id: BudgetId) -> Self {
         id.0
     }
+}
+
+impl TryFrom<String> for BudgetId {
+    fn try_from(id: String) -> Result<BudgetId, BudgetParseError> {
+        match Uuid::parse_str(&id) {
+            Ok(id) => Ok(Self(id)),
+            Err(_) => Err(BudgetParseError::BudgetIdParseError),
+        }
+    }
+
+    type Error = BudgetParseError;
 }
 
 #[derive(Debug, Clone)]

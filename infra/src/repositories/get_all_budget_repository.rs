@@ -2,43 +2,40 @@ use chrono::{TimeZone, Utc};
 use sqlx::types::Uuid;
 
 use core::{
-    domain::{errors::GetOneBudgetError, models::NewBudget},
-    repositories::GetOneBudgetRepositoryContract,
+    domain::{errors::GetAllBudgetsError, models::NewBudget},
+    repositories::GetAllBudgetsRepositoryContract,
 };
 use std::{str::FromStr, sync::Arc};
 
 use super::sqlite_connection_pool::SqliteConnectionPool;
 
 #[derive(Debug, Clone)]
-pub struct GetOneBudgetRepository {
+pub struct GetAllBudgetsRepository {
     db: Arc<SqliteConnectionPool>,
 }
 
-impl GetOneBudgetRepository {
+impl GetAllBudgetsRepository {
     pub fn new(db: Arc<SqliteConnectionPool>) -> Self {
         Self { db }
     }
 }
 
-impl GetOneBudgetRepositoryContract for GetOneBudgetRepository {
-    async fn get_one_budget(
-        &self,
-        budget_id: Uuid,
-    ) -> Result<Option<NewBudget>, GetOneBudgetError> {
+impl GetAllBudgetsRepositoryContract for GetAllBudgetsRepository {
+    async fn get_all_budgets(&self, user_id: Uuid) -> Result<Vec<NewBudget>, GetAllBudgetsError> {
         let mut connection = self
             .db
             .clone()
             .connect()
             .await
-            .map_err(|_| GetOneBudgetError::Unknown)?;
+            .map_err(|_| GetAllBudgetsError::Unknown)?;
 
         match sqlx::query!(
             r#"
             SELECT id, name, description, total, currency, user_id, created_at, updated_at
             FROM budgets
-            WHERE id = $1;
+            WHERE user_id = $1;
             "#,
-            budget_id,
+            user_id,
         )
         .map(|row| -> Option<NewBudget> {
             let id = Uuid::from_str(&row.id).ok();
@@ -59,11 +56,11 @@ impl GetOneBudgetRepositoryContract for GetOneBudgetRepository {
                 updated_at: Utc.from_utc_datetime(&row.updated_at),
             })
         })
-        .fetch_one(&mut *connection)
+        .fetch_all(&mut *connection)
         .await
         {
-            Ok(budget) => Ok(budget),
-            Err(_) => Err(GetOneBudgetError::Unknown),
+            Ok(budgets) => Ok(budgets.into_iter().flatten().collect()),
+            Err(_) => Err(GetAllBudgetsError::Unknown),
         }
     }
 }

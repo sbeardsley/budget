@@ -5,7 +5,39 @@
       {
         "label": "rust crud usecase module",
 
-        "command": "touch create_${input:entity_name}_use_case.rs' 'update_${input:entity_name}_use_case.rs' 'get_one_${input:entity_name}_use_case.rs' 'get_all_${input:entity_name}_use_case.rs'",
+        "command": "touch '${relativeFileDirname}/create_${input:entity_name}_use_case.rs' '${relativeFileDirname}/update_${input:entity_name}_use_case.rs' '${relativeFileDirname}/get_one_${input:entity_name}_use_case.rs' '${relativeFileDirname}/get_all_${input:entity_name}_use_case.rs' && echo 'mod create_${input:entity_name}_use_case;\nmod update_${input:entity_name}_use_case;\nmod get_one_${input:entity_name}_use_case;\nmod get_all_${input:entity_name}_use_case;\n' >> ${relativeFile} && echo 'pub use create_${input:entity_name}_use_case::*;\npub use update_${input:entity_name}_use_case::*;\npub use get_one_${input:entity_name}_use_case::*;\npub use get_all_${input:entity_name}_use_case::*;\n' >> ${relativeFile}",
+
+        "type": "shell",
+        "problemMatcher": [],
+        "presentation": {
+          "echo": false,
+          "reveal": "silent",
+          "focus": false,
+          "panel": "shared",
+          "showReuseMessage": false,
+          "clear": true
+        },
+     },
+     {
+        "label": "rust crud service module",
+
+        "command": "touch '${relativeFileDirname}/create_${input:entity_name}_service.rs' '${relativeFileDirname}/update_${input:entity_name}_service.rs' '${relativeFileDirname}/get_one_${input:entity_name}_service.rs' '${relativeFileDirname}/get_all_${input:entity_name}_service.rs' && echo 'mod create_${input:entity_name}_service;\nmod update_${input:entity_name}_service;\nmod get_one_${input:entity_name}_service;\nmod get_all_${input:entity_name}_service;\n' >> ${relativeFile} && echo 'pub use create_${input:entity_name}_service::*;\npub use update_${input:entity_name}_service::*;\npub use get_one_${input:entity_name}_service::*;\npub use get_all_${input:entity_name}_service::*;\n' >> ${relativeFile}",
+
+        "type": "shell",
+        "problemMatcher": [],
+        "presentation": {
+          "echo": false,
+          "reveal": "silent",
+          "focus": false,
+          "panel": "shared",
+          "showReuseMessage": false,
+          "clear": true
+        },
+     },
+     {
+        "label": "rust crud repo_contract module",
+
+        "command": "touch '${relativeFileDirname}/create_${input:entity_name}_repository.rs' '${relativeFileDirname}/update_${input:entity_name}_repository.rs' '${relativeFileDirname}/get_one_${input:entity_name}_repository.rs' '${relativeFileDirname}/get_all_${input:entity_name}_repository.rs' && echo 'mod create_${input:entity_name}_repository;\nmod update_${input:entity_name}_repository;\nmod get_one_${input:entity_name}_repository;\nmod get_all_${input:entity_name}_repository;\n' >> ${relativeFile} && echo 'pub use create_${input:entity_name}_repository::*;\npub use update_${input:entity_name}_repository::*;\npub use get_one_${input:entity_name}_repository::*;\npub use get_all_${input:entity_name}_repository::*;\n' >> ${relativeFile}",
 
         "type": "shell",
         "problemMatcher": [],
@@ -25,7 +57,7 @@
     {
       "type": "promptString",
       "id": "entity_name",
-      "description": "crud use_case entity_name",
+      "description": "crud entity_name",
       "default": "my_entity"
     }
   ]
