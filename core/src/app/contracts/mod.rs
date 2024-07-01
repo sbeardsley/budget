@@ -17,3 +17,12 @@ pub use create_category_command_handler::*;
 pub use get_all_category_query_handler::*;
 pub use get_one_category_query_handler::*;
 pub use update_category_command_handler::*;
+mod create_user_command_handler;
+mod get_all_user_command_handler;
+mod get_one_user_command_handler;
+mod update_user_command_handler;
+
+pub use create_user_command_handler::*;
+pub use get_all_user_command_handler::*;
+pub use get_one_user_command_handler::*;
+pub use update_user_command_handler::*;

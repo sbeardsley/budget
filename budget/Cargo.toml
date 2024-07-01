@@ -4,3 +4,9 @@ version = "0.0.0"
 edition = "2021"
 
 [dependencies]
+chrono = { version = "0.4.38", features = ["serde"] }
+clap = { version = "4.5.8", features = ["derive"] }
+fuzzy-matcher = "0.3.7"
+inquire = { version = "0.7.5", features = ["date"] }
+core = { path = "../core" }
+infra = { path = "../infra" }

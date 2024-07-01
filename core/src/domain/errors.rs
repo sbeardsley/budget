@@ -71,3 +71,31 @@ pub enum GetAllCategoriesError {
     #[error("Unknown error")]
     Unknown,
 }
+
+#[derive(Error, Debug)]
+pub enum CreateUserError {
+    #[error("User already exists")]
+    UserAlreadyExists,
+    #[error("Unknown error")]
+    Unknown,
+}
+
+#[derive(Error, Debug)]
+pub enum UpdateUserError {
+    #[error("User not found")]
+    UserNotFound,
+    #[error("Unknown error")]
+    Unknown,
+}
+
+#[derive(Error, Debug)]
+pub enum GetOneUserError {
+    #[error("Unknown error")]
+    Unknown,
+}
+
+#[derive(Error, Debug)]
+pub enum GetAllUsersError {
+    #[error("Unknown error")]
+    Unknown,
+}
