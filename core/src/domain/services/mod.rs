@@ -1,4 +1,6 @@
+mod auth_user_service;
 mod create_budget_service;
+mod hash_user_password_service;
 pub use create_budget_service::*;
 mod get_all_budgets_service;
 pub use get_all_budgets_service::*;
@@ -18,7 +20,11 @@ mod create_user_service;
 mod get_all_user_service;
 mod get_one_user_service;
 mod update_user_service;
+mod verify_user_password_service;
+pub use auth_user_service::*;
 pub use create_user_service::*;
 pub use get_all_user_service::*;
 pub use get_one_user_service::*;
+pub use hash_user_password_service::*;
 pub use update_user_service::*;
+pub use verify_user_password_service::*;

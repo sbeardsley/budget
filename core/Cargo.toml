@@ -14,6 +14,7 @@ include.workspace = true
 
 [dependencies]
 anyhow = { version = "1.0.86", features = ["std", "backtrace"] }
+argon2 = "0.5.3"
 chrono = { version = "0.4.38", features = ["serde"] }
 rust_decimal = "1.35.0"
 rust_decimal_macros = "1.34.2"

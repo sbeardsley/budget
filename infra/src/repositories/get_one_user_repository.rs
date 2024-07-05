@@ -31,7 +31,7 @@ impl GetOneUserRepositoryContract for GetOneUserRepository {
 
         match sqlx::query!(
             r#"
-            SELECT id, name, created_at, updated_at
+            SELECT id, name, email, password, created_at, updated_at
             FROM users
             WHERE id = $1
             "#,
@@ -47,6 +47,8 @@ impl GetOneUserRepositoryContract for GetOneUserRepository {
             Some(NewUser {
                 id: Uuid::from_str(&row.id).expect("unable to parse id"),
                 name: row.name,
+                email: row.email,
+                password: row.password,
                 created_at: Utc.from_utc_datetime(&row.created_at),
                 updated_at: Utc.from_utc_datetime(&row.updated_at),
             })

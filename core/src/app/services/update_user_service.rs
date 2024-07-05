@@ -5,22 +5,27 @@ use crate::{
         models::{UpdateUserCommand, UserPatch},
         usecases::UpdateUserUseCase,
     },
-    repositories::UpdateUserRepositoryContract,
+    repositories::{GetOneUserRepositoryContract, UpdateUserRepositoryContract},
 };
 
-pub struct UpdateUserService<T: UpdateUserRepositoryContract> {
-    update_user: crate::domain::services::UpdateUserService<T>,
+pub struct UpdateUserService<T: UpdateUserRepositoryContract, T2: GetOneUserRepositoryContract> {
+    update_user: crate::domain::services::UpdateUserService<T, T2>,
 }
 
-impl<T: UpdateUserRepositoryContract> UpdateUserService<T> {
-    pub fn new(repository: T) -> Self {
+impl<T: UpdateUserRepositoryContract, T2: GetOneUserRepositoryContract> UpdateUserService<T, T2> {
+    pub fn new(update_repository: T, get_repository: T2) -> Self {
         Self {
-            update_user: crate::domain::services::UpdateUserService::new(repository),
+            update_user: crate::domain::services::UpdateUserService::new(
+                update_repository,
+                get_repository,
+            ),
         }
     }
 }
 
-impl<T: UpdateUserRepositoryContract> UpdateUserCommandHandler for UpdateUserService<T> {
+impl<T: UpdateUserRepositoryContract, T2: GetOneUserRepositoryContract> UpdateUserCommandHandler
+    for UpdateUserService<T, T2>
+{
     async fn handle(&self, command: UpdateUserCommand) -> Result<(), UpdateUserError> {
         match self
             .update_user

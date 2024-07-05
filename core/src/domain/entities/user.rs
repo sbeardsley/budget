@@ -32,19 +32,53 @@ impl From<UserName> for String {
 }
 
 #[derive(Debug, Clone)]
+pub struct UserEmail(String);
+
+impl From<String> for UserEmail {
+    fn from(email: String) -> Self {
+        Self(email)
+    }
+}
+
+impl From<UserEmail> for String {
+    fn from(email: UserEmail) -> Self {
+        email.0
+    }
+}
+
+#[derive(Debug, Clone)]
+pub struct UserPassword(String);
+
+impl From<String> for UserPassword {
+    fn from(password: String) -> Self {
+        Self(password)
+    }
+}
+
+impl From<UserPassword> for String {
+    fn from(password: UserPassword) -> Self {
+        password.0
+    }
+}
+
+#[derive(Debug, Clone)]
 pub struct User {
     pub id: UserId,
     pub name: UserName,
+    pub email: UserEmail,
+    pub password: UserPassword,
     pub created_at: DateTime<Utc>,
     pub updated_at: DateTime<Utc>,
 }
 
 impl User {
-    pub fn new(name: String) -> Self {
+    pub fn new(name: String, email: String, password: String) -> Self {
         let now = Utc::now();
         Self {
             id: UserId(Uuid::now_v7()),
             name: UserName(name),
+            email: UserEmail(email),
+            password: UserPassword(password),
             created_at: now,
             updated_at: now,
         }

@@ -36,21 +36,20 @@ impl UpdateCategoryRepositoryContract for UpdateCategoryRepository {
             .await
             .map_err(|_| UpdateCategoryError::Unknown)?;
 
-        let id = Uuid::now_v7().to_string();
-        let now = Utc::now();
+        let id = category_id.to_string();
         let name = category.name;
-        let created_at = now;
-        let updated_at = now;
+        let updated_at = category.updated_at;
 
         match sqlx::query!(
             r#"
             UPDATE categories
             SET name = $2
-            WHERE id = $1
+            WHERE id = $1 and updated_at = $3
             RETURNING id, name, budget_id, created_at, updated_at;
             "#,
             id,
             name,
+            updated_at
         )
         .map(|row| {
             Ok(NewCategory {

@@ -16,6 +16,7 @@ pub struct BudgetPatch {
     pub description: Option<String>,
     pub total: Option<f64>,
     pub currency: Option<String>,
+    pub updated_at: DateTime<Utc>,
 }
 
 #[derive(Debug)]
@@ -63,6 +64,7 @@ pub struct UpdateBudgetCommand {
     pub description: Option<String>,
     pub total: Option<f64>,
     pub currency: Option<String>,
+    pub updated_at: DateTime<Utc>,
 }
 
 impl From<UpdateBudgetCommand> for BudgetPatch {
@@ -72,6 +74,7 @@ impl From<UpdateBudgetCommand> for BudgetPatch {
             description: command.description,
             total: command.total,
             currency: command.currency,
+            updated_at: command.updated_at,
         }
     }
 }

@@ -1,27 +1,22 @@
-use infra::app::Service;
-use inquire::{error::InquireResult, Confirm, DateSelect, MultiSelect, Password, Select, Text};
-pub struct App {
-    db_url: String,
-    service: Service,
+use crate::config::Config;
+use once_cell::sync::OnceCell;
+use tracing::level_filters::LevelFilter;
+
+static VERBOSITY: OnceCell<LevelFilter> = OnceCell::new();
+static CONFIG: OnceCell<Config> = OnceCell::new();
+
+pub fn verbosity() -> &'static LevelFilter {
+    VERBOSITY.get().expect("verbosity is not initialized")
 }
 
-impl App {
-    pub async fn new() -> Self {
-        Self {
-            db_url: "sqlite://budget.db".to_string(),
-            service: Service::new("sqlite://budget.db").await,
-        }
-    }
+pub fn config() -> &'static Config {
+    CONFIG.get().expect("config is not initialized")
+}
 
-    pub fn budget(&self) -> InquireResult<()> {
-        let name = Text::new("What is your name?").prompt()?;
-        let age = Text::new("What is your age?").prompt()?;
-        let confirm = Confirm::new("Are you sure?").prompt()?;
-        let password = Password::new("Enter your password").prompt()?;
-        let date = DateSelect::new("Select a date").prompt()?;
-        let select = Select::new("Select a number", vec!["One", "Two", "Three"]).prompt()?;
-        let multi_select =
-            MultiSelect::new("Select multiple numbers", vec!["One", "Two", "Three"]).prompt()?;
-        Ok(())
-    }
+pub fn set_global_verbosity(verbosity: LevelFilter) {
+    VERBOSITY.set(verbosity).expect("could not set verbosity");
+}
+
+pub fn set_global_config(config: Config) {
+    CONFIG.set(config).expect("could not set config");
 }

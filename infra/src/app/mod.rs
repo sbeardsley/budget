@@ -44,7 +44,7 @@ pub struct Service {
     get_one_category_command_handler: GetOneCategoryService<GetOneCategoryRepository>,
     get_all_categories_command_handler: GetAllCategoriesService<GetAllCategoriesRepository>,
     create_user_command_handler: CreateUserService<CreateUserRepository>,
-    update_user_command_handler: UpdateUserService<UpdateUserRepository>,
+    update_user_command_handler: UpdateUserService<UpdateUserRepository, GetOneUserRepository>,
     get_one_user_command_handler: GetOneUserService<GetOneUserRepository>,
     get_all_users_command_handler: GetAllUsersService<GetAllUsersRepository>,
 }
@@ -80,7 +80,10 @@ impl Service {
                 get_all_categories_repository,
             ),
             create_user_command_handler: CreateUserService::new(create_user_repository),
-            update_user_command_handler: UpdateUserService::new(update_user_repository),
+            update_user_command_handler: UpdateUserService::new(
+                update_user_repository,
+                get_one_user_repository.clone(),
+            ),
             get_one_user_command_handler: GetOneUserService::new(get_one_user_repository),
             get_all_users_command_handler: GetAllUsersService::new(get_all_users_repository),
         };

@@ -36,18 +36,18 @@ impl UpdateBudgetRepositoryContract for UpdateBudgetRepository {
             .await
             .map_err(|_| UpdateBudgetError::Unknown)?;
 
-        let id = Uuid::now_v7().to_string();
-        let now = Utc::now();
+        let id = budget_id;
         let name = budget.name;
         let description = budget.description;
         let total = budget.total;
         let currency = budget.currency;
+        let updated_at = budget.updated_at;
 
         match sqlx::query!(
             r#"
             UPDATE budgets
             SET name = $2, description = $3, total = $4, currency = $5
-            WHERE id = $1
+            WHERE id = $1 and updated_at = $6
             RETURNING id, name, description, total, currency, user_id, created_at, updated_at;
             "#,
             id,
@@ -55,6 +55,7 @@ impl UpdateBudgetRepositoryContract for UpdateBudgetRepository {
             description,
             total,
             currency,
+            updated_at,
         )
         .map(|row| {
             Ok(NewBudget {

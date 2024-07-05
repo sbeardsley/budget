@@ -1,0 +1,50 @@
+{
+  "db_name": "SQLite",
+  "query": "\n            INSERT INTO users (id, name, email, password, created_at, updated_at)\n            VALUES ($1, $2, $3, $4, $5, $6)\n            RETURNING id, name, email, password, created_at, updated_at;\n            ",
+  "describe": {
+    "columns": [
+      {
+        "name": "id",
+        "ordinal": 0,
+        "type_info": "Text"
+      },
+      {
+        "name": "name",
+        "ordinal": 1,
+        "type_info": "Text"
+      },
+      {
+        "name": "email",
+        "ordinal": 2,
+        "type_info": "Text"
+      },
+      {
+        "name": "password",
+        "ordinal": 3,
+        "type_info": "Text"
+      },
+      {
+        "name": "created_at",
+        "ordinal": 4,
+        "type_info": "Datetime"
+      },
+      {
+        "name": "updated_at",
+        "ordinal": 5,
+        "type_info": "Datetime"
+      }
+    ],
+    "parameters": {
+      "Right": 6
+    },
+    "nullable": [
+      false,
+      false,
+      true,
+      true,
+      false,
+      false
+    ]
+  },
+  "hash": "1cb997c68c2a44100915d564a2f7d9060f09bc1b20cd6f948a9c728ba0d076a5"
+}

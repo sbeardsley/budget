@@ -1,4 +1,6 @@
+mod auth_user_use_case;
 mod create_budget_use_case;
+mod verify_user_password_use_case;
 pub use create_budget_use_case::*;
 mod get_all_budgets_use_case;
 pub use get_all_budgets_use_case::*;
@@ -22,3 +24,7 @@ pub use create_user_use_case::*;
 pub use get_all_user_use_case::*;
 pub use get_one_user_use_case::*;
 pub use update_user_use_case::*;
+mod hash_user_password_use_case;
+pub use auth_user_use_case::*;
+pub use hash_user_password_use_case::*;
+pub use verify_user_password_use_case::*;

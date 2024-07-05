@@ -36,26 +36,31 @@ impl UpdateUserRepositoryContract for UpdateUserRepository {
             .await
             .map_err(|_| UpdateUserError::Unknown)?;
 
-        let id = Uuid::now_v7().to_string();
-        let now = Utc::now();
+        let id = user_id.to_string();
         let name = user.name;
-        let created_at = now;
-        let updated_at = now;
+        let email = user.email;
+        let password = user.password;
+        let updated_at = user.updated_at;
 
         match sqlx::query!(
             r#"
             UPDATE users
-            SET name = $2
-            WHERE id = $1
-            RETURNING id, name, created_at, updated_at;
+            SET name = $2, email = $3, password = $4
+            WHERE id = $1 and  updated_at = $5
+            RETURNING id, name, email, password, created_at, updated_at;
             "#,
             id,
             name,
+            email,
+            password,
+            updated_at,
         )
         .map(|row| {
             Ok(NewUser {
                 id: Uuid::from_str(&row.id).map_err(|_| UpdateUserError::Unknown)?,
                 name: row.name,
+                email: row.email,
+                password: row.password,
                 created_at: Utc.from_utc_datetime(&row.created_at),
                 updated_at: Utc.from_utc_datetime(&row.updated_at),
             })

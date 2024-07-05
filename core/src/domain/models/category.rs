@@ -10,6 +10,7 @@ pub struct CategoryDraft {
 #[derive(Debug)]
 pub struct CategoryPatch {
     pub name: Option<String>,
+    pub updated_at: DateTime<Utc>,
 }
 
 #[derive(Debug)]
@@ -45,11 +46,15 @@ impl From<CreateCategoryCommand> for CategoryDraft {
 pub struct UpdateCategoryCommand {
     pub id: Uuid,
     pub name: Option<String>,
+    pub updated_at: DateTime<Utc>,
 }
 
 impl From<UpdateCategoryCommand> for CategoryPatch {
     fn from(command: UpdateCategoryCommand) -> Self {
-        CategoryPatch { name: command.name }
+        CategoryPatch {
+            name: command.name,
+            updated_at: command.updated_at,
+        }
     }
 }
 

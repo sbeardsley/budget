@@ -1,0 +1,44 @@
+{
+  "db_name": "SQLite",
+  "query": "\n            INSERT INTO categories (id, name, budget_id, created_at, updated_at)\n            VALUES ($1, $2, $3, $4, $5)\n            RETURNING id, name, budget_id, created_at, updated_at;\n            ",
+  "describe": {
+    "columns": [
+      {
+        "name": "id",
+        "ordinal": 0,
+        "type_info": "Text"
+      },
+      {
+        "name": "name",
+        "ordinal": 1,
+        "type_info": "Text"
+      },
+      {
+        "name": "budget_id",
+        "ordinal": 2,
+        "type_info": "Text"
+      },
+      {
+        "name": "created_at",
+        "ordinal": 3,
+        "type_info": "Datetime"
+      },
+      {
+        "name": "updated_at",
+        "ordinal": 4,
+        "type_info": "Datetime"
+      }
+    ],
+    "parameters": {
+      "Right": 5
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      false
+    ]
+  },
+  "hash": "872092f13366f9c3f24e828bb2b27a2d2a6caaadb427cbc538d51295292e8d2b"
+}

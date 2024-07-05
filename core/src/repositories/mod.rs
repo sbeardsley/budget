@@ -1,4 +1,5 @@
 mod get_all_budgets_repository;
+mod get_one_user_by_email_repository;
 pub use get_all_budgets_repository::*;
 mod create_budget_repository;
 pub use create_budget_repository::*;
@@ -22,5 +23,6 @@ mod update_user_repository;
 
 pub use create_user_repository::*;
 pub use get_all_user_repository::*;
+pub use get_one_user_by_email_repository::*;
 pub use get_one_user_repository::*;
 pub use update_user_repository::*;

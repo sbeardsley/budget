@@ -35,17 +35,21 @@ impl CreateUserRepositoryContract for CreateUserRepository {
         let id = Uuid::now_v7().to_string();
         let now = Utc::now();
         let name = user.name;
+        let email = user.email;
+        let password = user.password;
         let created_at = now;
         let updated_at = now;
 
         match sqlx::query!(
             r#"
-            INSERT INTO users (id, name, created_at, updated_at)
-            VALUES ($1, $2, $3, $4)
-            RETURNING id, name, created_at, updated_at;
+            INSERT INTO users (id, name, email, password, created_at, updated_at)
+            VALUES ($1, $2, $3, $4, $5, $6)
+            RETURNING id, name, email, password, created_at, updated_at;
             "#,
             id,
             name,
+            email,
+            password,
             created_at,
             updated_at,
         )
@@ -53,6 +57,8 @@ impl CreateUserRepositoryContract for CreateUserRepository {
             Ok(NewUser {
                 id: Uuid::from_str(&row.id).map_err(|_| CreateUserError::Unknown)?,
                 name: row.name,
+                email: row.email,
+                password: row.password,
                 created_at: Utc.from_utc_datetime(&row.created_at),
                 updated_at: Utc.from_utc_datetime(&row.updated_at),
             })

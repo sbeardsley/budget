@@ -1,42 +1,25 @@
+#[macro_use]
+mod macros;
 mod app;
-mod cli;
+mod cmd;
+mod config;
+mod platform;
 
+use anyhow::Result;
 use clap::Parser;
-use inquire::{
-    error::InquireResult,
-    ui::{Attributes, Color, RenderConfig, StyleSheet, Styled},
-};
+use tracing_log::AsTrace;
 
-fn main() -> InquireResult<()> {
-    inquire::set_global_render_config(get_render_config());
+use crate::cmd::cli::Cli;
 
-    let cli = cli::Cli::parse();
-    match cli.command {
-        cli::Commands::Budget => {
-            println!("Running budget command");
-        }
-    }
-    Ok(())
-}
+fn main() -> Result<()> {
+    let cli = Cli::parse();
+    app::set_global_verbosity(cli.verbose.log_level_filter().as_trace());
+    app::set_global_config(config::load()?);
+    tracing_subscriber::fmt()
+        .pretty()
+        .with_thread_names(true)
+        .with_max_level(cli.verbose.log_level_filter().as_trace())
+        .init();
 
-fn get_render_config() -> RenderConfig<'static> {
-    let mut render_config = RenderConfig::default();
-    render_config.prompt_prefix = Styled::new("$").with_fg(Color::LightRed);
-    render_config.highlighted_option_prefix = Styled::new("➠").with_fg(Color::LightYellow);
-    render_config.selected_checkbox = Styled::new("☑").with_fg(Color::LightGreen);
-    render_config.scroll_up_prefix = Styled::new("⇞");
-    render_config.scroll_down_prefix = Styled::new("⇟");
-    render_config.unselected_checkbox = Styled::new("☐");
-
-    render_config.error_message = render_config
-        .error_message
-        .with_prefix(Styled::new("❌").with_fg(Color::LightRed));
-
-    render_config.answer = StyleSheet::new()
-        .with_attr(Attributes::ITALIC)
-        .with_fg(Color::LightYellow);
-
-    render_config.help_message = StyleSheet::new().with_fg(Color::DarkYellow);
-
-    render_config
+    cli.exec()
 }
